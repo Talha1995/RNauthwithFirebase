@@ -1,9 +1,9 @@
 // components/login.js
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput,  Alert, ActivityIndicator } from 'react-native';
 import auth from '@react-native-firebase/auth';
-
+import Button from '../components/Button'
 
 export default class Login extends Component {
   
@@ -56,31 +56,7 @@ export default class Login extends Component {
     }    
     return (
       <View style={styles.container}>  
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Email"
-          value={this.state.email}
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Password"
-          value={this.state.password}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
-          maxLength={15}
-          secureTextEntry={true}
-        />   
-        <Button
-          color="#3740FE"
-          title="Signin"
-          onPress={() => this.userLogin()}
-        />   
-
-        <Text 
-          style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Signup')}>
-          Don't have account? Click here to signup
-        </Text>                          
+            
       </View>
     );
   }

@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
+import Intro from '../container/intro'
 import Login from '../container/login';
 import Signup from '../container/signup';
 import Dashboard from '../container/dashboard';
@@ -12,8 +13,9 @@ const Stack = createStackNavigator();
 
 export default function MyStack() {
   return (
+    
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Intro"
       screenOptions={{
         headerTitleAlign: 'center',
         headerStyle: {
@@ -25,6 +27,11 @@ export default function MyStack() {
         },
       }}>
       <Stack.Screen
+        name="Intro"
+        component={Intro}
+        options={({title: 'Intro'},{headerShown:false})}
+      />
+         <Stack.Screen
         name="Signup"
         component={Signup}
         options={{title: 'Signup'}}
