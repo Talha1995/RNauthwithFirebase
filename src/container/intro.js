@@ -79,9 +79,9 @@ class Intro extends Component {
         activeDotIndex={activeSlide}
         containerStyle={{ backgroundColor: 'transparent' }}
         dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
+            width: 8,
+            height: 8,
+            borderRadius: 4,
             backgroundColor: '#4EF892',
             marginLeft:-10
             
@@ -90,7 +90,9 @@ class Intro extends Component {
             backgroundColor:'white',
             borderWidth:1,
             borderColor:'black',
-            
+           
+       
+
             // Define styles for inactive dots here
         }}
         
@@ -150,7 +152,9 @@ class Intro extends Component {
             <View style={{flexDirection:'row', }}>
             <View style={{paddingHorizontal:10,width:'82%',alignItems:'flex-start'}}>{ this.pagination }</View>
             <View style={{justifyContent:'center'}}>
-            <TouchableOpacity style={{height:50,width:50,borderRadius:25,backgroundColor:'#4EF892',justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity style={{height:50,width:50,borderRadius:25,backgroundColor:'#4EF892',justifyContent:'center',alignItems:'center'}}
+            onPress={()=>this.props.navigation.navigate('Login')}
+            >
                 <Image source={require('../../assets/img/arrow-right-line.png')} ></Image>
                 </TouchableOpacity>
             </View>

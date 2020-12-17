@@ -8,6 +8,7 @@ import Intro from '../container/intro'
 import Login from '../container/login';
 import Signup from '../container/signup';
 import Dashboard from '../container/dashboard';
+import SignupExtraInfo from '../container/SignupExtraInfo'
 
 const Stack = createStackNavigator();
 
@@ -34,12 +35,17 @@ export default function MyStack() {
          <Stack.Screen
         name="Signup"
         component={Signup}
-        options={{title: 'Signup'}}
+        options={{title: 'Signup'},{headerShown:false}}
+      />
+           <Stack.Screen
+        name="SignupExtraInfo"
+        component={SignupExtraInfo}
+        options={{title: 'Signup'},{headerShown:false}}
       />
       <Stack.Screen
         name="Login"
         component={Login}
-        options={({title: 'Login'}, {headerLeft: null})}
+        options={({title: 'Login'}, {headerShown:false})}
       />
       <Stack.Screen
         name="Dashboard"

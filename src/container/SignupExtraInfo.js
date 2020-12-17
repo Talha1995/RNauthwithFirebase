@@ -10,7 +10,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
   Image,
-  
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import Button from '../components/Button';
@@ -19,8 +18,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {color} from 'react-native-reanimated';
 import SwitchToggle from '@dooboo-ui/native-switch-toggle';
-
-export default class Signup extends Component {
+import DropDownPicker from 'react-native-dropdown-picker';
+export default class SignupExtraInfo extends Component {
   constructor() {
     super();
     this.state = {
@@ -64,11 +63,11 @@ export default class Signup extends Component {
     }
   };
 
-  toggleSwitch=() =>{
+  toggleSwitch = () => {
     this.setState({
-      isEnabled:!this.state.isEnabled
-    })
-  }
+      isEnabled: !this.state.isEnabled,
+    });
+  };
   render() {
     if (this.state.isLoading) {
       return (
@@ -79,40 +78,39 @@ export default class Signup extends Component {
     }
     return (
       <View style={{backgroundColor: '#FFFFFF', flex: 1}}>
-        <View style={{height: 100, width: '100%'}}>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <Image
-              style={{alignSelf: 'center', height: 18.74, width: 100}}
-              source={require('../../assets/img/LogoWithText.png')}
-            />
+        <View style={{height: 100, width: '100%' , paddingHorizontal:20}}>
+          <View
+            style={{
+             
+              flexDirection: 'row',
+              marginTop: 20,
+            }}>
+            <View style={{width:"10%"}}>
+           <TouchableOpacity onPress={()=> this.props.navigation.goBack()}><Image source={require('../../assets/img/arrow-left-line.png')}></Image></TouchableOpacity>
+            </View>
+            <View style={{justifyContent:'center',width:'80%'}}>
+              <Text style={{alignSelf: 'center', fontSize: 18}}>
+                Complete Registeration 
+              </Text>
+            </View>
           </View>
         </View>
         <View>
           <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-            <View style={{height: 31, width: 177, alignSelf: 'center'}}>
+            <View style={{height: 43, width: 232, alignSelf: 'center'}}>
               <Text
-                style={{textAlign: 'center', fontSize: 22, fontWeight: 'bold'}}>
-                Welcome,
+                style={{textAlign: 'center', fontSize: 14, }}>
+                Some information is required to set up your profile on GolfLinks
               </Text>
             </View>
-            <View
-              style={{
-                height: 53,
-                width: 216,
-                alignSelf: 'center',
-                marginTop: 15,
-              }}>
-              <Text style={{textAlign: 'center', fontSize: 18}}>
-                Let's create an account
-              </Text>
-            </View>
+       
           </View>
-          <View style={{justifyContent: 'center', marginTop: 90}}>
+          <View style={{justifyContent: 'center', marginTop: 70}}>
             <View
               style={{
                 alignSelf: 'center',
                 width: 321,
-                height: 100,
+                height: 250,
 
                 shadowOffset: {height: 1},
 
@@ -127,58 +125,57 @@ export default class Signup extends Component {
                     borderBottomColor: '#4EF8921A',
                     borderBottomWidth: 1,
                   }}>
-                  <InputBox style={{height: 50}} placeholder="Email"></InputBox>
+                  <InputBox style={{height: 50}} placeholder="First Name"></InputBox>
                 </View>
-                <View style={{width: '100%', flexDirection: 'row'}}>
-                  <View style={{width: '90%'}}>
-                    <InputBox
-                      style={{height: 50}}
-                      placeholder="Password"></InputBox>
-                  </View>
-                  <View style={{justifyContent: 'center', paddingLeft: 10}}>
-                    <TouchableOpacity>
-                      <Image
-                        source={require('../../assets/img/eye-close-line.png')}></Image>
-                    </TouchableOpacity>
-                  </View>
+                <View
+                  style={{
+                    borderBottomColor: '#4EF8921A',
+                    borderBottomWidth: 1,
+                  }}>
+                  <InputBox style={{height: 50}} placeholder="Last Name"></InputBox>
                 </View>
+                
+                <DropDownPicker
+           placeholder='Gender'
+            items={[
+              {label: 'Male', value: 'Male'},
+              {label: 'Female', value: 'Female'},
+              
+            ]}
+            // defaultValue={this.state.country}
+            containerStyle={{height: 40,paddingLeft:5}}
+            style={{ borderBottomColor:'#4EF8921A',borderWidth:1,borderColor:'transparent',backgroundColor:'transparent', shadowOpacity:0.1,shadowRadius:50 ,height:50,width:321,borderRadius:10,alignSelf:'center'}}
+           
+            arrowColor='#4EF892'
+            onChangeItem={(item) =>
+              this.setState({
+                country: item.value,
+              })
+            }
+          />
+                <View
+                  style={{
+                    borderBottomColor: '#4EF8921A',
+                    borderBottomWidth: 1,
+                  }}>
+                  <InputBox style={{height: 50}} placeholder="First Name"></InputBox>
+                </View>
+                <View
+                  style={{
+                    borderBottomColor: '#4EF8921A',
+                    borderBottomWidth: 1,
+                  }}>
+                  <InputBox style={{height: 50}} placeholder="First Name"></InputBox>
+                </View>
+                
+                
               </View>
+              
             </View>
           </View>
         </View>
-        <View
-          style={{marginTop: 15, flexDirection: 'row', paddingHorizontal: 27}}>
-          <Text style={{fontSize: 14}}>I agree with </Text>
-          <Text style={{color: '#4EF892', fontSize: 14 , width:'60%'}}>
-            Terms and Conditions
-          </Text>
-          <View >
-          <SwitchToggle
-        containerStyle={{
-         
-          width: 34,
-          height: 16,
-          borderRadius: 25,
         
-          padding: 5,
-        }}
-        circleStyle={{
-          width: 12,
-          height: 12,
-          borderRadius: 6,
-          
-        }}
-        switchOn={this.state.isEnabled}
-        onPress={()  => this.toggleSwitch()}
-        circleColorOff="#232632"
-        circleColorOn="#4EF892"
-        backgroundColorOff='#2326320C'
-        backgroundColorOn='#232632'
-        duration={500}
-      />
-          </View>
-        </View>
-        <View style={{justifyContent: 'center', marginTop: 102}}>
+        <View style={{justifyContent: 'center', marginTop: 88}}>
           <TouchableOpacity
             style={{
               alignSelf: 'center',
@@ -187,18 +184,12 @@ export default class Signup extends Component {
               height: 50,
               justifyContent: 'center',
               borderRadius: 10,
-            }} onPress={() => this.props.navigation.navigate('SignupExtraInfo')} > 
+            }}>
             <Text style={{textAlign: 'center'}}>Continue</Text>
           </TouchableOpacity>
         </View>
 
-        <View style={{justifyContent: 'center', marginTop: 16}}>
-          <Text style={{textAlign: 'center'}}>Already have an account?</Text>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Login')}>
-            <Text style={{textAlign: 'center', color: '#4EF892'}}>Login</Text>
-          </TouchableOpacity>
-        </View>
+      
       </View>
     );
   }
