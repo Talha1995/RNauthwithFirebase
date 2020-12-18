@@ -50,7 +50,7 @@ export default function MyStack() {
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
-        options={({title: 'Dashboard'}, {headerLeft: null})}
+        options={({title: 'Dashboard'}, {headerShown:false})}
       />
     </Stack.Navigator>
   );

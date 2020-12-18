@@ -64,11 +64,19 @@ export default class Login extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <View style={styles.preloader}>
+        <View style={{ left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          position: 'absolute',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#fff'}}>
           <ActivityIndicator size="large" color="#9E9E9E" />
         </View>
       );
     }
+    
     return (
       <View style={{backgroundColor: '#FFFFFF', flex: 1}}>
         <View style={{height: 100, width: '100%'}}>
@@ -119,13 +127,15 @@ export default class Login extends Component {
                     borderBottomColor: '#4EF8921A',
                     borderBottomWidth: 1,
                   }}>
-                  <InputBox style={{height: 50}} placeholder="Email"></InputBox>
+                  <InputBox style={{height: 50}} placeholder="Email" onChange={(email => this.setState({email:email}))}></InputBox>
                 </View>
                 <View style={{width: '100%', flexDirection: 'row'}}>
                   <View style={{width: '90%'}}>
                     <InputBox
                       style={{height: 50}}
-                      placeholder="Password"></InputBox>
+                      placeholder="Password"
+                      onChange={(password) =>this.setState({password:password}) }
+                      ></InputBox>
                   </View>
                   <View style={{justifyContent: 'center', paddingLeft: 10}}>
                     <TouchableOpacity>
@@ -154,7 +164,10 @@ export default class Login extends Component {
               height: 50,
               justifyContent: 'center',
               borderRadius: 10,
-            }}>
+              
+            }}
+            onPress={() => this.userLogin()}
+            >
             <Text style={{textAlign: 'center'}}>Continue</Text>
           </TouchableOpacity>
         </View>

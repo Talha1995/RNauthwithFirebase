@@ -6,7 +6,9 @@ const InputBox = (props) => {
     
   return (
     <View>
-    <TextInput placeholder={props.placeholder} style={props.style} ></TextInput>
+    <TextInput placeholder={props.placeholder} style={props.style} onChangeText={ (email) => props.onChange(email)} >
+
+   </TextInput>
     </View>
   )
 }

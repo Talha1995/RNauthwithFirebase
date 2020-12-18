@@ -37,32 +37,7 @@ export default class Signup extends Component {
     this.setState(state);
   };
 
-  userLogin = () => {
-    if (this.state.email === '' && this.state.password === '') {
-      Alert.alert('Enter details to signin!');
-    } else {
-      this.setState({
-        isLoading: true,
-      });
-
-      auth()
-        .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then((res) => {
-          console.log(res);
-          console.log(
-            'User logged-in successfully!',
-            res.user._user.providerData,
-          );
-          this.setState({
-            isLoading: false,
-            email: '',
-            password: '',
-          });
-          this.props.navigation.navigate('Dashboard');
-        })
-        .catch((error) => this.setState({errorMessage: error.message}));
-    }
-  };
+ 
 
   toggleSwitch=() =>{
     this.setState({
@@ -70,6 +45,7 @@ export default class Signup extends Component {
     })
   }
   render() {
+    const {email,password} = this.state
     if (this.state.isLoading) {
       return (
         <View style={styles.preloader}>
@@ -127,13 +103,13 @@ export default class Signup extends Component {
                     borderBottomColor: '#4EF8921A',
                     borderBottomWidth: 1,
                   }}>
-                  <InputBox style={{height: 50}} placeholder="Email"></InputBox>
+                  <InputBox style={{height: 50}} placeholder="Email" onChange={(email => this.setState({email:email}))}></InputBox>
                 </View>
                 <View style={{width: '100%', flexDirection: 'row'}}>
                   <View style={{width: '90%'}}>
                     <InputBox
                       style={{height: 50}}
-                      placeholder="Password"></InputBox>
+                      placeholder="Password" onChange={(password) =>this.setState({password:password}) }></InputBox>
                   </View>
                   <View style={{justifyContent: 'center', paddingLeft: 10}}>
                     <TouchableOpacity>
@@ -187,7 +163,7 @@ export default class Signup extends Component {
               height: 50,
               justifyContent: 'center',
               borderRadius: 10,
-            }} onPress={() => this.props.navigation.navigate('SignupExtraInfo')} > 
+            }} onPress={() => this.props.navigation.navigate('SignupExtraInfo',{email,password})}> 
             <Text style={{textAlign: 'center'}}>Continue</Text>
           </TouchableOpacity>
         </View>

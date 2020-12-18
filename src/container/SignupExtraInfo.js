@@ -10,8 +10,11 @@ import {
   ActivityIndicator,
   SafeAreaView,
   Image,
+  alert
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import auth  from '@react-native-firebase/auth';
+import database  from '@react-native-firebase/database'
+import firebase  from '@react-native-firebase/app'
 import Button from '../components/Button';
 import InputBox from '../components/InputBox';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -19,6 +22,9 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 import {color} from 'react-native-reanimated';
 import SwitchToggle from '@dooboo-ui/native-switch-toggle';
 import DropDownPicker from 'react-native-dropdown-picker';
+import DatePicker from 'react-native-date-picker';
+import RBSheet from "react-native-raw-bottom-sheet";
+var dateOfBirth  = '';
 export default class SignupExtraInfo extends Component {
   constructor() {
     super();
@@ -27,6 +33,9 @@ export default class SignupExtraInfo extends Component {
       password: '',
       isLoading: false,
       isEnabled: false,
+      picker: false,
+      date:new Date(),
+      status:false,
     };
   }
 
@@ -36,39 +45,55 @@ export default class SignupExtraInfo extends Component {
     this.setState(state);
   };
 
-  userLogin = () => {
-    if (this.state.email === '' && this.state.password === '') {
-      Alert.alert('Enter details to signin!');
+  registerUser = () => {
+   const email=  this.props.route.params.email;
+   const password = this.props.route.params.password
+    
+    if(email === '' && password === '') {
+      Alert.alert('Enter details to signup!')
     } else {
       this.setState({
         isLoading: true,
-      });
-
+      })
+  
+     
       auth()
-        .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then((res) => {
-          console.log(res);
-          console.log(
-            'User logged-in successfully!',
-            res.user._user.providerData,
-          );
-          this.setState({
-            isLoading: false,
-            email: '',
-            password: '',
-          });
-          this.props.navigation.navigate('Dashboard');
+      .createUserWithEmailAndPassword(email, password)
+      .then((res) => {
+        var dateOfBirth = this.state.date.getDate() + " " + this.state.date.getMonth() + " " +this.state.date.getFullYear()
+        const obj = {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          gender: this.state.gender.value,
+          dateOfBirth:dateOfBirth,
+          uid:res.user.uid,
+          city:this.state.city
+        }
+        console.log("user", obj)
+       database().ref(`users/${res.user.uid}`).set(obj)
+        this.setState({
+          isLoading: false,
+          displayName: '',
+          email: '', 
+          password: ''
         })
-        .catch((error) => this.setState({errorMessage: error.message}));
+        this.props.navigation.navigate('Login')
+      })
+      .catch(error => console.log("error",error))      
     }
-  };
+  }
 
   toggleSwitch = () => {
     this.setState({
       isEnabled: !this.state.isEnabled,
     });
   };
+
   render() {
+
+    
+   var dateOfBirth = this.state.date.getDate() + " " + this.state.date.getMonth() + " " +this.state.date.getFullYear()
+   console.log(dateOfBirth)
     if (this.state.isLoading) {
       return (
         <View style={styles.preloader}>
@@ -78,19 +103,21 @@ export default class SignupExtraInfo extends Component {
     }
     return (
       <View style={{backgroundColor: '#FFFFFF', flex: 1}}>
-        <View style={{height: 100, width: '100%' , paddingHorizontal:20}}>
+        <View style={{height: 100, width: '100%', paddingHorizontal: 20}}>
           <View
             style={{
-             
               flexDirection: 'row',
               marginTop: 20,
             }}>
-            <View style={{width:"10%"}}>
-           <TouchableOpacity onPress={()=> this.props.navigation.goBack()}><Image source={require('../../assets/img/arrow-left-line.png')}></Image></TouchableOpacity>
+            <View style={{width: '10%'}}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <Image
+                  source={require('../../assets/img/arrow-left-line.png')}></Image>
+              </TouchableOpacity>
             </View>
-            <View style={{justifyContent:'center',width:'80%'}}>
+            <View style={{justifyContent: 'center', width: '80%'}}>
               <Text style={{alignSelf: 'center', fontSize: 18}}>
-                Complete Registeration 
+                Complete Registeration
               </Text>
             </View>
           </View>
@@ -98,12 +125,10 @@ export default class SignupExtraInfo extends Component {
         <View>
           <View style={{flexDirection: 'column', justifyContent: 'center'}}>
             <View style={{height: 43, width: 232, alignSelf: 'center'}}>
-              <Text
-                style={{textAlign: 'center', fontSize: 14, }}>
+              <Text style={{textAlign: 'center', fontSize: 14}}>
                 Some information is required to set up your profile on GolfLinks
               </Text>
             </View>
-       
           </View>
           <View style={{justifyContent: 'center', marginTop: 70}}>
             <View
@@ -125,56 +150,99 @@ export default class SignupExtraInfo extends Component {
                     borderBottomColor: '#4EF8921A',
                     borderBottomWidth: 1,
                   }}>
-                  <InputBox style={{height: 50}} placeholder="First Name"></InputBox>
+                  <InputBox
+                    style={{height: 50}} onChange={(fName => this.setState({firstName:fName}))}
+                    placeholder="First Name"></InputBox>
                 </View>
                 <View
                   style={{
                     borderBottomColor: '#4EF8921A',
                     borderBottomWidth: 1,
                   }}>
-                  <InputBox style={{height: 50}} placeholder="Last Name"></InputBox>
+                  <InputBox
+                    style={{height: 50}} onChange={(lname => this.setState({lastName:lname}))}
+                    placeholder="Last Name"></InputBox>
                 </View>
-                
+
                 <DropDownPicker
-           placeholder='Gender'
-            items={[
-              {label: 'Male', value: 'Male'},
-              {label: 'Female', value: 'Female'},
-              
-            ]}
-            // defaultValue={this.state.country}
-            containerStyle={{height: 40,paddingLeft:5}}
-            style={{ borderBottomColor:'#4EF8921A',borderWidth:1,borderColor:'transparent',backgroundColor:'transparent', shadowOpacity:0.1,shadowRadius:50 ,height:50,width:321,borderRadius:10,alignSelf:'center'}}
-           
-            arrowColor='#4EF892'
-            onChangeItem={(item) =>
-              this.setState({
-                country: item.value,
-              })
-            }
-          />
+                  placeholder="Gender"
+                  items={[
+                    {label: 'Male', value: 'Male'},
+                    {label: 'Female', value: 'Female'},
+                  ]}
+                  // defaultValue={this.state.country}
+                  containerStyle={{height: 40, paddingLeft: 6}}
+                  style={{
+                    borderBottomColor: '#4EF8921A',
+                    borderWidth: 1,
+                    borderColor: 'transparent',
+                    backgroundColor: 'transparent',
+                    shadowOpacity: 0.1,
+                    shadowRadius: 50,
+                    height: 50,
+                    width: 321,
+                    borderRadius: 10,
+                    alignSelf: 'center',
+                  }}
+                  arrowColor="#4EF892"
+                  onChangeItem={(gender) =>
+                    this.setState({
+                      gender: gender,
+                    })
+                  }
+                />
                 <View
                   style={{
                     borderBottomColor: '#4EF8921A',
                     borderBottomWidth: 1,
                   }}>
-                  <InputBox style={{height: 50}} placeholder="First Name"></InputBox>
+                  <View
+                    style={{height: 50, width: 295, justifyContent: 'center'}}>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}
+                      onPress={() =>this.RBSheet.open()}>
+                
+                     { this.state.status ? <Text>{dateOfBirth}</Text> : <Text>Date of Birth</Text> }
+                
+                      <RBSheet
+                        ref={(ref) => {
+                          this.RBSheet = ref;
+                        }}
+                        height={300}
+                        openDuration={250}
+                        customStyles={{
+                          container: {
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          },
+                        }}>
+                        <DatePicker
+                        date={this.state.date}
+                        onDateChange={date => this.setState({ date:date,status:true })}
+                        mode={'date'}
+                      />
+                      </RBSheet>
+
+                      <Image
+                        source={require('../../assets/img/calendar-icon.png')}></Image>
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 <View
                   style={{
                     borderBottomColor: '#4EF8921A',
                     borderBottomWidth: 1,
                   }}>
-                  <InputBox style={{height: 50}} placeholder="First Name"></InputBox>
+                  <InputBox style={{height: 50}} onChange={(city => this.setState({city:city}))} placeholder="City"></InputBox>
                 </View>
-                
-                
               </View>
-              
             </View>
           </View>
         </View>
-        
+
         <View style={{justifyContent: 'center', marginTop: 88}}>
           <TouchableOpacity
             style={{
@@ -184,12 +252,10 @@ export default class SignupExtraInfo extends Component {
               height: 50,
               justifyContent: 'center',
               borderRadius: 10,
-            }}>
+            }} onPress = { () => this.registerUser()}>
             <Text style={{textAlign: 'center'}}>Continue</Text>
           </TouchableOpacity>
         </View>
-
-      
       </View>
     );
   }
