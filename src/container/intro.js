@@ -9,7 +9,11 @@ import {
 import Carousel , { Pagination } from 'react-native-snap-carousel';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Feather'
+import Icon from 'react-native-vector-icons/Feather';
+import Matrix from '../contants/matrix/index'
+
+
+
 class Intro extends Component {
   constructor(props) {
     super(props);
@@ -40,19 +44,19 @@ class Intro extends Component {
       <View
         style={{
           backgroundColor: item.color,
-          height: 408,
-          width: 311,
+          height: Matrix.VerticalSize(408),
+          width: Matrix.HorizontalSize(311),
           borderRadius: 10,
         }}>
-        <View style={{height: '100%', width: '100%'}}>
+        <View style={{height: Matrix.VerticalSize(52), width: Matrix.HorizontalSize(265), marginTop:Matrix.VerticalSize(35),marginLeft:Matrix.HorizontalSize(15), marginRight:Matrix.HorizontalSize(31)}}>
           <Text
             style={{
               color: '#232632',
               textAlign: 'left',
-              marginLeft: 15,
-              marginTop: 35,
-              marginRight: 52,
-              fontSize: 18,
+              height:"100%",
+              width:'100%',
+              fontSize: Matrix.FontRegular,
+              fontFamily:'Poppins-SemiBold'
             }}>
             {item.title}
           </Text>
@@ -61,11 +65,13 @@ class Intro extends Component {
           style={{
             alignSelf: 'flex-end',
             position: 'absolute',
-            padding: 20,
-            bottom: 0,
+
+            bottom: Matrix.VerticalSize(27.27),
+            height:Matrix.VerticalSize(177.73),
+            width:Matrix.HorizontalSize(170.88)
           }}>
           <Image
-            style={{height: 177.73, width: 179.88}}
+            style={{height:'100%',width:'100%'}} resizeMode='contain'
             source={item.image}></Image>
         </View>
       </View>
@@ -105,15 +111,15 @@ class Intro extends Component {
   render() {
     return (
       <SafeAreaView style={{backgroundColor: '#FFFFFF', flex: 1}}>
-        <View style={{height: 100, width: '100%'}}>
-          <View style={{flex: 1, justifyContent: 'center'}}>
+        <View style={{marginTop:Matrix.VerticalSize(61),justifyContent:'center',alignItems:'center'}} >
+          <View  style={{height: Matrix.VerticalSize(18.74), width: Matrix.HorizontalSize(100)}}>
             <Image
-              style={{alignSelf: 'center', height: 18.74, width: 100}}
+              style={{alignSelf: 'center', height: "100%", width: "100%",}} resizeMode='contain'
               source={require('../../assets/img/LogoWithText.png')}
             />
           </View>
         </View>
-        <View> 
+        <View style={{marginTop:Matrix.VerticalSize(82)}}> 
         <Carousel
           ref={(c) => {
             this._carousel = c;
@@ -127,7 +133,7 @@ class Intro extends Component {
         />
         </View>
         
-        <View style={{ paddingTop:30 }}>
+        <View style={{ marginTop:Matrix.VerticalSize(45) }}>
           <DropDownPicker
            placeholder='Choose your Language'
             items={[
@@ -137,7 +143,7 @@ class Intro extends Component {
             ]}
             // defaultValue={this.state.country}
             containerStyle={{height: 40,}}
-            style={{ borderColor:'white', shadowOpacity:0.1,shadowRadius:50 ,height:50,width:321,borderRadius:10,alignSelf:'center'}}
+            style={{ borderColor:'white', shadowOpacity:0.1,shadowRadius:50 ,height:Matrix.VerticalSize(50),width:Matrix.HorizontalSize(321),borderRadius:10,alignSelf:'center'}}
            
             arrowColor='#4EF892'
             onChangeItem={(item) =>
@@ -147,9 +153,9 @@ class Intro extends Component {
             }
           />
         </View>
-        <View>
+        <View style={{marginTop:Matrix.VerticalSize(30)}}>
             {/*  */}
-            <View style={{flexDirection:'row', }}>
+            <View style={{flexDirection:'row' }}>
             <View style={{paddingHorizontal:10,width:'82%',alignItems:'flex-start'}}>{ this.pagination }</View>
             <View style={{justifyContent:'center'}}>
             <TouchableOpacity style={{height:50,width:50,borderRadius:25,backgroundColor:'#4EF892',justifyContent:'center',alignItems:'center'}}

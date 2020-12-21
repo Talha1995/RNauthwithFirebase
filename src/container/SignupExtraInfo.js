@@ -24,6 +24,8 @@ import SwitchToggle from '@dooboo-ui/native-switch-toggle';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker';
 import RBSheet from "react-native-raw-bottom-sheet";
+import Matrix from '../contants/matrix/index'
+import matrix from '../contants/matrix/index';
 var dateOfBirth  = '';
 export default class SignupExtraInfo extends Component {
   constructor() {
@@ -103,7 +105,7 @@ export default class SignupExtraInfo extends Component {
     }
     return (
       <View style={{backgroundColor: '#FFFFFF', flex: 1}}>
-        <View style={{height: 100, width: '100%', paddingHorizontal: 20}}>
+        <View style={{height:Matrix.VerticalSize(100), width: '100%', paddingHorizontal:Matrix.HorizontalSize(17)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -116,26 +118,26 @@ export default class SignupExtraInfo extends Component {
               </TouchableOpacity>
             </View>
             <View style={{justifyContent: 'center', width: '80%'}}>
-              <Text style={{alignSelf: 'center', fontSize: 18}}>
+              <Text style={{alignSelf: 'center', fontSize: 18,fontFamily:'Poppins-Regular'}}>
                 Complete Registeration
               </Text>
             </View>
           </View>
         </View>
         <View>
-          <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+          <View style={{flexDirection: 'column', justifyContent: 'center' ,}}>
             <View style={{height: 43, width: 232, alignSelf: 'center'}}>
-              <Text style={{textAlign: 'center', fontSize: 14}}>
+              <Text style={{textAlign: 'center', fontSize:Matrix.customFontSize(14),fontFamily:'Poppins-Regular' , color:'#232632B3'}}>
                 Some information is required to set up your profile on GolfLinks
               </Text>
             </View>
           </View>
-          <View style={{justifyContent: 'center', marginTop: 70}}>
+          <View style={{justifyContent: 'center', marginTop:Matrix.VerticalSize(145)}}>
             <View
               style={{
                 alignSelf: 'center',
-                width: 321,
-                height: 250,
+                width:Matrix.HorizontalSize(321),
+                height:Matrix.VerticalSize(250),
 
                 shadowOffset: {height: 1},
 
@@ -151,7 +153,7 @@ export default class SignupExtraInfo extends Component {
                     borderBottomWidth: 1,
                   }}>
                   <InputBox
-                    style={{height: 50}} onChange={(fName => this.setState({firstName:fName}))}
+                    style={{height:Matrix.VerticalSize(50)}} onChange={(fName => this.setState({firstName:fName}))}
                     placeholder="First Name"></InputBox>
                 </View>
                 <View
@@ -160,7 +162,7 @@ export default class SignupExtraInfo extends Component {
                     borderBottomWidth: 1,
                   }}>
                   <InputBox
-                    style={{height: 50}} onChange={(lname => this.setState({lastName:lname}))}
+                    style={{height:Matrix.VerticalSize(50)}} onChange={(lname => this.setState({lastName:lname}))}
                     placeholder="Last Name"></InputBox>
                 </View>
 
@@ -171,7 +173,7 @@ export default class SignupExtraInfo extends Component {
                     {label: 'Female', value: 'Female'},
                   ]}
                   // defaultValue={this.state.country}
-                  containerStyle={{height: 40, paddingLeft: 6}}
+                  containerStyle={{height:Matrix.VerticalSize(50), paddingLeft: 6}}
                   style={{
                     borderBottomColor: '#4EF8921A',
                     borderWidth: 1,
@@ -183,6 +185,7 @@ export default class SignupExtraInfo extends Component {
                     width: 321,
                     borderRadius: 10,
                     alignSelf: 'center',
+                    color:'#232632B3'
                   }}
                   arrowColor="#4EF892"
                   onChangeItem={(gender) =>
@@ -197,7 +200,7 @@ export default class SignupExtraInfo extends Component {
                     borderBottomWidth: 1,
                   }}>
                   <View
-                    style={{height: 50, width: 295, justifyContent: 'center'}}>
+                    style={{height:Matrix.VerticalSize(50), width: 295, justifyContent: 'center'}}>
                     <TouchableOpacity
                       style={{
                         flexDirection: 'row',
@@ -205,7 +208,7 @@ export default class SignupExtraInfo extends Component {
                       }}
                       onPress={() =>this.RBSheet.open()}>
                 
-                     { this.state.status ? <Text>{dateOfBirth}</Text> : <Text>Date of Birth</Text> }
+                     { this.state.status ? <Text style={{color:'#232632B3'}}>{dateOfBirth}</Text> : <Text style={{color:'#232632B3'}}>Date of Birth</Text> }
                 
                       <RBSheet
                         ref={(ref) => {
@@ -236,14 +239,14 @@ export default class SignupExtraInfo extends Component {
                     borderBottomColor: '#4EF8921A',
                     borderBottomWidth: 1,
                   }}>
-                  <InputBox style={{height: 50}} onChange={(city => this.setState({city:city}))} placeholder="City"></InputBox>
+                  <InputBox style={{height:Matrix.VerticalSize(50)}} onChange={(city => this.setState({city:city}))} placeholder="City"></InputBox>
                 </View>
               </View>
             </View>
           </View>
         </View>
 
-        <View style={{justifyContent: 'center', marginTop: 88}}>
+        <View style={{justifyContent: 'center', marginTop:Matrix.VerticalSize(88)}}>
           <TouchableOpacity
             style={{
               alignSelf: 'center',
@@ -253,7 +256,7 @@ export default class SignupExtraInfo extends Component {
               justifyContent: 'center',
               borderRadius: 10,
             }} onPress = { () => this.registerUser()}>
-            <Text style={{textAlign: 'center'}}>Continue</Text>
+            <Text style={{textAlign: 'center',fontFamily:'Poppins-SemiBold', fontSize:Matrix.customFontSize(14), color:'#4B5767'}}>Continue</Text>
           </TouchableOpacity>
         </View>
       </View>

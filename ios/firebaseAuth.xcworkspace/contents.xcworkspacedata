@@ -5,6 +5,9 @@
       location = "group:firebaseAuth.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:firebaseAuth">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
